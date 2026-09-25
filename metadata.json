@@ -1,0 +1,6 @@
+{
+  "name": "Elohim Louvor - Gestão do Ministério de Louvor",
+  "description": "Sistema unificado web e mobile para gestão do Ministério de Louvor da Igreja Batista Elohim. Escalas, cultos, acervo musical com transpositor de tons e gestão de integrantes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Health check and connection test
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Songs collection
+    match /songs/{songId} {
+      allow read: if true;
+      allow write: if isValidId(songId) && incoming().title is string && incoming().title.size() <= 200;
+    }
+
+    // Members collection
+    match /members/{memberId} {
+      allow read: if true;
+      allow write: if isValidId(memberId) && incoming().name is string && incoming().name.size() <= 120;
+    }
+
+    // Events collection (escalas e cultos)
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isValidId(eventId) && incoming().title is string && incoming().title.size() <= 200;
+    }
+
+    // Notices collection (avisos)
+    match /notices/{noticeId} {
+      allow read: if true;
+      allow write: if isValidId(noticeId) && incoming().title is string && incoming().title.size() <= 200;
+    }
+
+    // Default deny for everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

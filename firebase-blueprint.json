@@ -1,0 +1,93 @@
+{
+  "entities": {
+    "Member": {
+      "title": "Member",
+      "description": "Membro da equipe de louvor e ministério musical da Igreja Batista Elohim",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "name": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 120 },
+        "phone": { "type": "string", "maxLength": 30 },
+        "role": { "type": "string", "enum": ["admin", "member"] },
+        "avatarUrl": { "type": "string", "maxLength": 500 },
+        "initials": { "type": "string", "maxLength": 10 },
+        "primaryInstrument": { "type": "string", "maxLength": 50 },
+        "vocalRange": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "enum": ["active", "in_vacation", "inactive"] },
+        "joinedYear": { "type": "number" }
+      },
+      "required": ["id", "name", "email", "role", "primaryInstrument", "status"]
+    },
+    "Song": {
+      "title": "Song",
+      "description": "Louvor catalogado com cifras, tom original e tom da igreja",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "title": { "type": "string", "maxLength": 200 },
+        "artist": { "type": "string", "maxLength": 120 },
+        "originalKey": { "type": "string", "maxLength": 10 },
+        "churchKey": { "type": "string", "maxLength": 10 },
+        "tempoBpm": { "type": "number" },
+        "timeSignature": { "type": "string", "maxLength": 10 },
+        "chords": { "type": "string", "maxLength": 30000 },
+        "notes": { "type": "string", "maxLength": 2000 },
+        "cifraUrl": { "type": "string", "maxLength": 500 },
+        "mediaUrl": { "type": "string", "maxLength": 500 },
+        "spotifyUrl": { "type": "string", "maxLength": 500 },
+        "lastPlayed": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["id", "title", "artist", "originalKey", "churchKey", "tempoBpm", "chords"]
+    },
+    "WorshipEvent": {
+      "title": "WorshipEvent",
+      "description": "Culto ou ensaio com escala de ministros e setlist de louvores",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "title": { "type": "string", "maxLength": 200 },
+        "type": { "type": "string", "enum": ["culto_domingo", "culto_jovens", "ensaio", "conferencia", "vigilia"] },
+        "date": { "type": "string", "maxLength": 20 },
+        "time": { "type": "string", "maxLength": 10 },
+        "location": { "type": "string", "maxLength": 120 },
+        "theme": { "type": "string", "maxLength": 200 },
+        "pastorOrSpeaker": { "type": "string", "maxLength": 120 },
+        "notes": { "type": "string", "maxLength": 2000 }
+      },
+      "required": ["id", "title", "type", "date", "time", "location"]
+    },
+    "Notice": {
+      "title": "Notice",
+      "description": "Comunicado e aviso do ministério de louvor",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 100 },
+        "title": { "type": "string", "maxLength": 200 },
+        "content": { "type": "string", "maxLength": 3000 },
+        "date": { "type": "string", "maxLength": 30 },
+        "author": { "type": "string", "maxLength": 120 },
+        "priority": { "type": "string", "enum": ["normal", "high"] }
+      },
+      "required": ["id", "title", "content", "date", "author", "priority"]
+    }
+  },
+  "firestore": {
+    "/members/{memberId}": {
+      "schema": "Member",
+      "description": "Coleção com os membros da equipe de louvor da Elohim"
+    },
+    "/songs/{songId}": {
+      "schema": "Song",
+      "description": "Coleção com o repertório completo e cifras da igreja"
+    },
+    "/events/{eventId}": {
+      "schema": "WorshipEvent",
+      "description": "Coleção de cultos, ensaios e escalas ministeriais"
+    },
+    "/notices/{noticeId}": {
+      "schema": "Notice",
+      "description": "Coleção de comunicados da liderança"
+    }
+  }
+}
